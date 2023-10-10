@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="pt_BR" manifest="cache.manifest">
+<head>
+  <meta charset="utf-8">
+  <title>Numerologia Pitagórica</title>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1, user-scalable=no">
+  <meta name="apple-mobile-web-app-title" content="Numerologia">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="stylesheet" href="./css/main.css">
+  <!-- ****** faviconit.com favicons ****** -->
+  <link rel="shortcut icon" href="./favicon.ico">
+  <link rel="icon" sizes="16x16 32x32 64x64" href="./favicon.ico">
+  <link rel="icon" type="image/png" sizes="196x196" href="./favicon-192.png">
+  <link rel="icon" type="image/png" sizes="160x160" href="./favicon-160.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="./favicon-96.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="./favicon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16.png">
+  <link rel="apple-touch-icon" href="./favicon-57.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="./favicon-114.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="./favicon-72.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="./favicon-144.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="./favicon-60.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="./favicon-120.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="./favicon-76.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="./favicon-152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./favicon-180.png">
+  <meta name="msapplication-TileColor" content="#FFFFFF">
+  <meta name="msapplication-TileImage" content="./favicon-144.png">
+  <meta name="msapplication-config" content="./browserconfig.xml">
+  <!-- ****** faviconit.com favicons ****** -->
+  <!-- iPad retina portrait startup image -->
+  <link href="./splash/apple-touch-startup-image-1536x2008.png" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" rel="apple-touch-startup-image">
+   <!-- iPad non-retina portrait startup image -->
+  <link href="./splash/apple-touch-startup-image-768x1004.png" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 1) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <!-- iPhone 6 Plus portrait startup image -->
+  <link href="./splash/apple-touch-startup-image-1242x2148.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" rel="apple-touch-startup-image">
+   <!-- iPhone 6 startup image -->
+  <link href="./splash/apple-touch-startup-image-750x1294.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+  <!-- iPhone 5 startup image -->
+  <link href="./splash/apple-touch-startup-image-640x1096.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+  <!-- iPhone < 5 retina startup image -->
+  <link href="./splash/apple-touch-startup-image-640x920.png" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+  <!-- iPhone < 5 non-retina startup image -->
+  <link href="./splash/apple-touch-startup-image-320x460.png" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 1)" rel="apple-touch-startup-image">
+</head>
+<body ng-app="app">
+  <nav class="navbar navbar-fixed-top navbar-default">
+    <div class="container">
+      <div class="navbar-header" ng-controller="CacheController">
+        <a href="/" class="navbar-brand">Numerologia Pitagórica 1.1.0 <span class="glyphicon glyphicon-{{appCache()}}" aria-hidden="true"></span></a>
+      </div>
+    </div>
+  </nav>
+  <div class="container main" ng-controller="CalcController">
+    <div class="row">
+      <form ng-submit="calculate(user)" name="calcForm" class="ng-dirty ng-valid-required ng-invalid ng-invalid-minlength">
+        <div class="row">
+          <div class="form-group col-md-6 inputs">
+            <label for="fullName">Nome Completo</label>
+            <input id="fullName" type="text" placeholder="João da Silva" name="name" ng-model="user.name" required=""
+            class="form-control upper" autofocus>
+            <div ng-show="calcForm.name.$dirty && calcForm.name.$invalid" class="error-container">
+              <p ng-show="calcForm.name.$error.required" class="error ng-hide label label-danger">
+                  Por favor, preencha o nome completo
+              </p>
+            </div>
+          </div>
+          <div class="form-group col-md-6 inputs">
+            <label for="birthDate">Data de Nascimento</label>
+            <input id="birthDate" type="text" placeholder="__/__/____" name="birth" ng-model="user.birth" required
+            class="form-control upper" ui-mask="99/99/9999" ng-pattern="/^(0?[1-9]|[12][0-9]|3[01])(0?[1-9]|1[012])\d{4}$/">
+            <div ng-show="calcForm.birth.$dirty && calcForm.birth.$invalid" class="error-container">
+              <p ng-show="calcForm.birth.$error.required" class="error ng-hide label label-danger">
+                  Por favor, preencha a data de nascimento
+              </p>
+              <p ng-show="calcForm.birth.$error.pattern" class="error ng-hide label label-info">
+                  A data de nascimento deve estar no formato dia/mês/ano
+              </p>
+            </div>
+          </div>
+          <div class="form-group col-md-6 col-md-offset-6 submit-button">
+            <button id="send" type="submit" class="btn-lg btn-primary pull-right">Calcular</button>
+          </div>
+        </div>
+      </form>
+      <div class="panel panel-default" ng-if="result" ng-cloak>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-sm-12">
+              <p class="ap">
+                <strong>{{result.age}}</strong> anos
+              </p>
+            </div>
+          </div>
+          <!-- FIRST COLUMN -->
+          <div class="col-sm-3">
+            <div class="row">
+              <div class="col-sm-12">
+                <table class="table">
+                  <tr>
+                    <td class="title" style="width: 90px;">MO</td>
+                    <td class="value">{{result.mo}}</td>
+                    <td class="title cd">CD</td>
+                    <td class="value">{{result.cd}}</td>
+                  </tr>
+                  <tr>
+                    <td class="title">EU</td>
+                    <td class="value">{{result.eu}}</td>
+                    <td class="title"></td>
+                    <td class="value"></td>
+                  </tr>
+                  <tr>
+                    <td class="title">EX</td>
+                    <td class="value">{{result.ex}}</td>
+                    <td class="title"></td>
+                    <td class="value"></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- SECOND COLUMN -->
+          <div class="col-sm-3">
+            <div class="row">
+              <div class="col-sm-12">
+                <table class="table">
+                  <tr>
+                    <td class="title" style="width: 90px;">C1</td>
+                    <td class="value">{{result.c1}}</td>
+                    <td class="yv">{{result.start1}}/{{result.end1}}</td>
+                    <td class="ys">anos</td>
+                  </tr>
+                  <tr>
+                    <td class="title">C2</td>
+                    <td class="value">{{result.c2}}</td>
+                    <td class="yv">{{result.end1}}/{{result.end2}}</td>
+                    <td class="ys">anos</td>
+                  </tr>
+                  <tr>
+                    <td class="title">C3</td>
+                    <td class="value">{{result.c3}}</td>
+                    <td class="yv">+ {{result.end2}}</td>
+                    <td class="ys">anos</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- THIRD COLUMN -->
+          <div class="col-sm-3">
+            <div class="row">
+              <div class="col-sm-12">
+                <table class="table">
+                  <tr>
+                    <td class="title" style="width: 90px;">D1</td>
+                    <td class="value">{{result.d1}}</td>
+                    <td class="yv">{{result.start1}}/{{result.end1}}</td>
+                    <td class="ys">anos</td>
+                  </tr>
+                  <tr>
+                    <td class="title">D2</td>
+                    <td class="value">{{result.d2}}</td>
+                    <td class="yv">{{result.end1}}/{{result.end2}}</td>
+                    <td class="ys">anos</td>
+                  </tr>
+                  <tr>
+                    <td class="title">DM</td>
+                    <td class="value">{{result.dm}}</td>
+                    <td class="c11"></td>
+                    <td class="c12"></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- FORTH COLUMN -->
+          <div class="col-sm-3">
+            <div class="row">
+              <div class="col-sm-12">
+                <table class="table">
+                  <tr>
+                    <td class="title" style="width: 90px;">R1</td>
+                    <td class="value">{{result.r1}}</td>
+                    <td class="yv">{{result.r1Start}}/{{result.r1End}}</td>
+                    <td class="ys">anos</td>
+                  </tr>
+                  <tr>
+                    <td class="title">R2</td>
+                    <td class="value">{{result.r2}}</td>
+                    <td class="yv">{{result.r2Start}}/{{result.r2End}}</td>
+                    <td class="ys">anos</td>
+                  </tr>
+                  <tr>
+                    <td class="title">R3</td>
+                    <td class="value">{{result.r3}}</td>
+                    <td class="yv">{{result.r3Start}}/{{result.r3End}}</td>
+                    <td class="ys">anos</td>
+                  </tr>
+                  <tr>
+                    <td class="title">R4</td>
+                    <td class="value">{{result.r4}}</td>
+                    <td class="yv">+ {{result.r4Start}}</td>
+                    <td class="ys">anos</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <p class="ap">
+                Ano Pessoal <strong>{{result.ap}}</strong> de {{result.apStart}} a {{result.apEnd}}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="pull-right" ng-if="result" ng-cloak><a href="/">limpar dados</a></p>
+    </div>
+  </div>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Numerologia -->
+    <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-4608591291382670"
+      data-ad-slot="3732535891"
+      data-ad-format="auto">
+    </ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+  <footer role="navigation" class="navbar navbar-default navbar-fixed-bottom footer" ng-controller="CopyRightController">
+    <div class="container-fluid">
+      <p class="copyright text-center">
+        © <span ng-bind="copyRightYear()">2015</span> <a href="http://www.linkedin.com/in/russoedu" target="_blank">Eduardo Russo</a>
+      </p>
+    </div>
+  </footer>
+  <script type="text/javascript" src="./js/vendor.js"></script>
+  <script type="text/javascript" src="./js/main.js"></script>
+  <script>
+    addToHomescreen({
+      startDelay: 1
+    });
+  </script>
+</body>
+</html>
